@@ -1,5 +1,5 @@
 Step 1:- Clone The Project
-Step 2:- Create env for set up's by typing 'cp .env.example .env' in your terminal
+Step 2:- Create database with the name givn in .env file before migrating.
 Step 3:- Generate artisan key by typing 'php artisan key:generate' in your terminal.
 Step 4:- Install & Update composer by typing 'composer install & composer update' in your terminal.
 Step 5 :- To Migrate Use:-
