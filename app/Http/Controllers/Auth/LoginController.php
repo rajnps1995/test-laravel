@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use App\User;
 use Exception;
 use Illuminate\Http\Request;
+use Validator, Redirect, Response;
 
 class LoginController extends Controller
 {
@@ -44,20 +45,10 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-
-        try {
-            // if( $request->u_type=="C"){
-            //     $u_type=3;
-            //     $redirect_route = 'dashboard';
-            // }
-            // else if($request->u_type=="S"){
-            //     $u_type=2;
-            //     $redirect_route = 'dashboard';
-            // }
-            // else if($request->u_type=="A"){
-            //     $u_type=1;
-            //     $redirect_route = 'category.index';
-            // }
+        $this->validate($request, [
+            'username' => 'required|max:255',
+            'password' => 'required|confirmed',
+        ]);
             $credential = ['username' => $request->username, 'password' => $request->password];
             $checkAuth = auth()->guard('web');
             if ($checkAuth->attempt($credential) == 1) {
@@ -72,9 +63,10 @@ class LoginController extends Controller
                     return redirect()->route('products.create');
                 }
             }
-        }
-        catch (Exception $e) {
-            return back()->with('error', $e->getMessage());
-        }
+            else {
+                // Go back on error (or do what you want)
+                return redirect()->back();
+            }
+
 }
 }

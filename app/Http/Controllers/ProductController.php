@@ -78,7 +78,7 @@ class ProductController extends Controller
                 'date' => $myNewDate
             ];
 
-            \Mail::to('rajnps1995@gmail.com')->send(new MyMail($details));
+            \Mail::to('applocumadmin@yopmail.com')->send(new MyMail($details));
 
             return back()->with('success', 'Stored successfully');
         } catch (Exception $e) {
