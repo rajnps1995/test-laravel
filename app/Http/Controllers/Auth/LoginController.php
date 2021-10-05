@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Auth;
 use App\User;
 use Exception;
 use Illuminate\Http\Request;
-use Validator, Redirect, Response;
 
 class LoginController extends Controller
 {
@@ -31,7 +30,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    // protected $redirectTo = RouteServiceProvider::HOME;
+    protected $redirectTo = RouteServiceProvider::HOME;
 
     /**
      * Create a new controller instance.
@@ -45,10 +44,10 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-        $this->validate($request, [
-            'username' => 'required|max:255',
-            'password' => 'required|confirmed',
-        ]);
+        $request->validate([
+            'username' => 'required',
+            'password' => 'required',
+         ]);
             $credential = ['username' => $request->username, 'password' => $request->password];
             $checkAuth = auth()->guard('web');
             if ($checkAuth->attempt($credential) == 1) {
@@ -63,10 +62,8 @@ class LoginController extends Controller
                     return redirect()->route('products.create');
                 }
             }
-            else {
-                // Go back on error (or do what you want)
-                return redirect()->back();
+            else{
+                return back()->with('error', 'Email-Address Or Password Are Wrong.');
             }
-
 }
 }
